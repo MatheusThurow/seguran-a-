@@ -5,7 +5,7 @@ if(enabled){
  window.dataLayer=window.dataLayer||[];
  window.gtag=function(){window.dataLayer.push(arguments)};
  window.gtag('js',new Date());
- window.gtag('config',id,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,debug_mode:analyticsConfig.debug});
+ window.gtag('config',id,{send_page_view:true,allow_google_signals:false,allow_ad_personalization_signals:false,debug_mode:analyticsConfig.debug});
  const script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);document.head.append(script);
 }
 export function track(name,params={}){if(!enabled)return;try{window.gtag('event',name,params)}catch{}}
