@@ -30,9 +30,10 @@ jobs:
           cp index.html _site/
           cp -r css js assets _site/
           touch _site/.nojekyll
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
       - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4
+
