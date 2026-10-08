@@ -1,2 +1,11 @@
-// ID público do fluxo Web do Google Analytics 4. Exemplo: G-ABC1234567.
-export const analyticsConfig={measurementId:'G-F0ENF5WQP6',debug:false};
+// Configuração pública do aplicativo Web no Firebase.
+export const firebaseConfig={
+ apiKey:'AIzaSyCG8LFkUvbLmGqc0c1Z-wm6yUtEv-yYi60',
+ authDomain:'seguranca-7ff7c.firebaseapp.com',
+ projectId:'seguranca-7ff7c',
+ storageBucket:'seguranca-7ff7c.firebasestorage.app',
+ messagingSenderId:'948682127493',
+ appId:'1:948682127493:web:89ad23fb3b56f54aced1ec',
+ measurementId:'G-FC1CQG0DDJ'
+};
+export const analyticsConfig={debug:false};

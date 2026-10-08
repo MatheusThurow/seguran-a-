@@ -64,3 +64,9 @@ Esta aplicação usa a API REST, sem Next.js ou middleware. A configuração pú
 O envio ocorre ao responder o questionário final. A tela mostra sucesso ou falha e permite tentar novamente, mantendo o mesmo ID para evitar duplicação. Sem envio concluído, o registro permanece no armazenamento local da sessão; não há reenvio automático após recarregar. Participações incompletas não são enviadas.
 
 Em Table Editor → participacoes você poderá consultar e exportar os resultados. CEP e endereço não são enviados. A coleta pública permite envios fabricados por terceiros; antes de uma aplicação pública em grande escala, acrescente validação e proteção contra abuso no servidor.
+
+## Firebase Analytics (integração atual)
+
+A coleta usa o SDK Web oficial Firebase 13.0.0 por CDN e o aplicativo seguranca-7ff7c, com measurementId G-FC1CQG0DDJ. Essa configuração substitui a tag anterior G-F0ENF5WQP6. Os eventos da atividade continuam iguais; o Supabase não foi alterado. A configuração fica em js/analytics-config.js. As instruções anteriores sobre preencher measurementId diretamente em analyticsConfig foram substituídas pelo objeto firebaseConfig.
+
+Confira os dados no projeto Firebase correto, na seção Analytics, ou na propriedade GA4 vinculada a ele. O envio HTTP bem-sucedido não confirma a exibição nos relatórios; essa confirmação requer acesso ao painel.
