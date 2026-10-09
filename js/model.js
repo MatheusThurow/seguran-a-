@@ -21,14 +21,17 @@ export const risks=[
 export const shareText='PARE • CONFIRA • COMPRE\nPARE: desconfie de preço muito baixo e pressão de tempo.\nCONFIRA: endereço oficial, dados da empresa, reputação independente e destinatário do pagamento.\nCOMPRE: só depois de verificar; se houver suspeita, interrompa.\nCompras Seguras — simulação educativa.';
 export function score(questions,answers){return questions.reduce((n,q,i)=>n+(q.correct===answers[i]?1:0),0)}
 export class Session {
- constructor({now=()=>performance.now(),id=()=>crypto.randomUUID(),save=()=>{},onEvent=()=>{}}={}){this.now=now;this.save=save;this.onEvent=onEvent;this.start=now();this.data={version:VERSION,id:id(),events:[],pre:null,post:null,outcome:null,analysisMs:0};this.stage='welcome';this.visible=true;this.segment=null;this.firstBuy=null;this.decided=false;}
+ constructor({now=()=>performance.now(),id=()=>crypto.randomUUID(),save=()=>{},onEvent=()=>{}}={}){this.now=now;this.save=save;this.onEvent=onEvent;this.start=now();this.data={version:VERSION,id:id(),events:[],pre:null,post:null,outcome:null,analysisMs:0};this.stage='welcome';this.visible=true;this.segment=null;this.firstBuy=null;this.decided=false;this.stageTimes={welcome:0};this.stageStarted=this.start;}
+ accumulateStage(){if(this.stageStarted!==null){this.stageTimes[this.stage]=(this.stageTimes[this.stage]||0)+Math.max(0,this.now()-this.stageStarted);this.stageStarted=null}}
+ changeStage(stage){this.accumulateStage();this.stage=stage;this.stageTimes[stage]??=0;this.stageStarted=this.visible?this.now():null;this.persist()}
+ finishStageTimes(){this.accumulateStage();for(const [stage,duration] of Object.entries(this.stageTimes)){if(stage==='result')continue;this.event('tempo_etapa_'+stage,{durationMs:Math.round(duration)})}}
  persist(){this.save(this.data)}
  event(name,extra={}){if(this.data.events.some(e=>e.name===name))return;this.data.events.push({name,stage:this.stage,elapsedMs:Math.max(0,Math.round(this.now()-this.start)),...extra});this.persist();try{this.onEvent(this.data.events.at(-1),this.data)}catch{}}
  enterStore(){if(this.segment===null&&!this.decided){this.segment=this.visible?this.now():null;this.event('entrou_na_loja')}}
  analysis(){return this.data.analysisMs+(this.segment===null?0:this.now()-this.segment)}
- visibility(visible){if(!visible&&this.segment!==null){this.data.analysisMs+=this.now()-this.segment;this.segment=null}this.visible=visible;if(visible&&!this.decided&&this.data.events.some(e=>e.name==='entrou_na_loja'))this.segment??=this.now();this.persist()}
+ visibility(visible){this.accumulateStage();this.stageStarted=visible?this.now():null;if(!visible&&this.segment!==null){this.data.analysisMs+=this.now()-this.segment;this.segment=null}this.visible=visible;if(visible&&!this.decided&&this.data.events.some(e=>e.name==='entrou_na_loja'))this.segment??=this.now();this.persist()}
  buy(){if(this.firstBuy!==null)return;this.firstBuy=this.analysis();this.event('clicou_comprar',{analysisMs:Math.round(this.firstBuy)});if(this.firstBuy<15000)this.event('compra_precipitada')}
  decide(outcome){if(this.decided)return;this.data.analysisMs=Math.round(this.analysis());this.segment=null;this.decided=true;this.data.outcome=outcome;this.event(outcome==='purchase'?'aceitou_pix_suspeito':'desistiu_por_suspeita');this.event('tempo_total_analise',{valueMs:this.data.analysisMs});this.persist()}
- quiz(kind,answers){const questions=kind==='pre'?preQuestions:postQuestions;this.data[kind]={answers:[...answers],score:score(questions,answers)};this.event(kind==='pre'?'respondeu_quiz_inicial':'respondeu_quiz_final');this.persist()}
+ quiz(kind,answers){const questions=kind==='pre'?preQuestions:postQuestions;this.data[kind]={answers:[...answers],score:score(questions,answers)};if(kind==='post')this.finishStageTimes();this.event(kind==='pre'?'respondeu_quiz_inicial':'respondeu_quiz_final');this.persist()}
  has(name){return this.data.events.some(e=>e.name===name)}
 }

@@ -79,4 +79,4 @@ O Supabase não recebe novas participações após essa atualização. Os regist
 
 ## Painel de resultados
 
-Acesse resultados.html. Ative E-mail/senha no Firebase Authentication e crie a conta do responsável. Copie seu UID e crie, pelo console do Firestore, um documento administradores/UID com um campo ativo=true. Publique firestore.rules atualizado: a existência desse documento permite ler as participações; visitantes não podem criar administradores nem listar resultados. O painel mostra médias por participação, decisões, sinais, evolução e tempo, com filtros por data e CSV. Inclui registros de teste; resultados antigos do Supabase não foram importados.
+Acesse resultados.html, sem login. Publique firestore.rules atualizado no console do Firebase para liberar a leitura pública das participações. A leitura dos registros será pública; criação continua vinculada ao usuário anônimo e edição/exclusão continuam bloqueadas. O painel mostra médias, decisões, sinais, evolução e tempo, com filtros por data e CSV. Inclui registros de teste; resultados antigos do Supabase não foram importados.

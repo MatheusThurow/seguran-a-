@@ -6,8 +6,8 @@ service cloud.firestore {
   match /participacoes/{documentId} {
    function ownsPath(){return request.auth != null && documentId.matches(request.auth.uid + '_[a-f0-9-]{36}');}
    function validAnswers(a){return a is list && a.size()==3 && a[0] in [0,1,2] && a[1] in [0,1,2] && a[2] in [0,1,2];}
-   allow get: if ownsPath() || isAdmin();
-   allow list: if isAdmin();
+   allow get: if true;
+   allow list: if true;
    allow create: if ownsPath()
     && request.resource.data.keys().hasAll(['id','version','pre_answers','pre_score','post_answers','post_score','outcome','analysis_ms','events','uid','created_at'])
     && request.resource.data.keys().hasOnly(['id','version','pre_answers','pre_score','post_answers','post_score','outcome','analysis_ms','events','uid','created_at'])
