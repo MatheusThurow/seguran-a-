@@ -1,10 +1,13 @@
 rules_version = '2';
 service cloud.firestore {
  match /databases/{database}/documents {
+  function isAdmin(){return request.auth != null && exists(/databases/$(database)/documents/administradores/$(request.auth.uid));}
+  match /administradores/{uid} {allow read, write: if false;}
   match /participacoes/{documentId} {
    function ownsPath(){return request.auth != null && documentId.matches(request.auth.uid + '_[a-f0-9-]{36}');}
    function validAnswers(a){return a is list && a.size()==3 && a[0] in [0,1,2] && a[1] in [0,1,2] && a[2] in [0,1,2];}
-   allow get: if ownsPath();
+   allow get: if ownsPath() || isAdmin();
+   allow list: if isAdmin();
    allow create: if ownsPath()
     && request.resource.data.keys().hasAll(['id','version','pre_answers','pre_score','post_answers','post_score','outcome','analysis_ms','events','uid','created_at'])
     && request.resource.data.keys().hasOnly(['id','version','pre_answers','pre_score','post_answers','post_score','outcome','analysis_ms','events','uid','created_at'])
@@ -18,7 +21,7 @@ service cloud.firestore {
     && request.resource.data.analysis_ms is int && request.resource.data.analysis_ms >= 0
     && request.resource.data.events is list && request.resource.data.events.size() <= 50
     && request.resource.data.created_at == request.time;
-   allow list, update, delete: if false;
+   allow update, delete: if false;
   }
  }
 }

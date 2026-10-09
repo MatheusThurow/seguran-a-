@@ -76,3 +76,7 @@ Confira os dados no projeto Firebase correto, na seção Analytics, ou na propri
 O envio agora usa Firebase Authentication anônimo e Cloud Firestore. Publique firestore.rules na aba Regras do Firestore antes de ativar o site. Documentos ficam na coleção participacoes, com ID uid_sessao, e incluem respostas, notas, eventos e tempo, sem CEP/endereço. Cada usuário pode criar e consultar apenas documentos do próprio UID; listagem, edição e exclusão são negadas. O painel administrativo permite ao responsável consultar os dados. Transações evitam documentos duplicados em novas tentativas.
 
 O Supabase não recebe novas participações após essa atualização. Os registros antigos permanecem lá; não houve migração ou exclusão. As seções anteriores de Supabase são históricas.
+
+## Painel de resultados
+
+Acesse resultados.html. Ative E-mail/senha no Firebase Authentication e crie a conta do responsável. Copie seu UID e crie, pelo console do Firestore, um documento administradores/UID com um campo ativo=true. Publique firestore.rules atualizado: a existência desse documento permite ler as participações; visitantes não podem criar administradores nem listar resultados. O painel mostra médias por participação, decisões, sinais, evolução e tempo, com filtros por data e CSV. Inclui registros de teste; resultados antigos do Supabase não foram importados.
