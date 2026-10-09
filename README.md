@@ -70,3 +70,9 @@ Em Table Editor → participacoes você poderá consultar e exportar os resultad
 A coleta usa o SDK Web oficial Firebase 13.0.0 por CDN e o aplicativo seguranca-7ff7c, com measurementId G-FC1CQG0DDJ. Essa configuração substitui a tag anterior G-F0ENF5WQP6. Os eventos da atividade continuam iguais; o Supabase não foi alterado. A configuração fica em js/analytics-config.js. As instruções anteriores sobre preencher measurementId diretamente em analyticsConfig foram substituídas pelo objeto firebaseConfig.
 
 Confira os dados no projeto Firebase correto, na seção Analytics, ou na propriedade GA4 vinculada a ele. O envio HTTP bem-sucedido não confirma a exibição nos relatórios; essa confirmação requer acesso ao painel.
+
+## Firestore (armazenamento atual)
+
+O envio agora usa Firebase Authentication anônimo e Cloud Firestore. Publique firestore.rules na aba Regras do Firestore antes de ativar o site. Documentos ficam na coleção participacoes, com ID uid_sessao, e incluem respostas, notas, eventos e tempo, sem CEP/endereço. Cada usuário pode criar e consultar apenas documentos do próprio UID; listagem, edição e exclusão são negadas. O painel administrativo permite ao responsável consultar os dados. Transações evitam documentos duplicados em novas tentativas.
+
+O Supabase não recebe novas participações após essa atualização. Os registros antigos permanecem lá; não houve migração ou exclusão. As seções anteriores de Supabase são históricas.
