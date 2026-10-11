@@ -21,6 +21,12 @@ test('os sete sinais são preservados no envio e contados pelo painel',()=>{
  vm.runInContext(renderSource+'\nrecords=testRecords;render();',context);
  assert.equal((get('risks').innerHTML.match(/<strong>50%/g)||[]).length,7);
  assert.equal((get('risks').innerHTML.match(/1 de 2 participações/g)||[]).length,7);
+ get('chart-type').value='pie';vm.runInContext('render();',context);
+ assert.match(get('decisions').innerHTML,/conic-gradient/);
+ assert.match(get('decisions').innerHTML,/100%/);
+ assert.match(get('learning').innerHTML,/conic-gradient/);
+ get('chart-type').value='bars';vm.runInContext('render();',context);
+ assert.doesNotMatch(get('decisions').innerHTML,/conic-gradient/);
  context.testRecords=[{...sent,events:[],created_at:date}];
  vm.runInContext('records=testRecords;render();',context);
  assert.match(get('risk-status').textContent,/Nenhuma das 1 participações/);
