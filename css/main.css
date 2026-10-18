@@ -43,3 +43,5 @@ main.checkout-view{max-width:1180px}.checkout-retail{background:#fff;border:1px 
 .age-question{margin:24px 0}.age-question label{padding:0;display:block;font-weight:600}.age-question label span{font-weight:400}.age-question p{font-size:14px;color:var(--muted);max-width:600px;margin:8px 0 12px}.age-question select{font:inherit;padding:12px;min-height:48px;max-width:100%;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}select:focus-visible{outline:3px solid #2878bd;outline-offset:4px}
 
 .stage-navigation{display:flex;align-items:center;gap:20px;margin-bottom:12px}.stage-navigation .step{flex:1;min-width:0}.back-control{flex-shrink:0;background:transparent;border:0;border-radius:4px;color:var(--muted);font-size:14px;font-weight:500;padding:10px 4px;min-height:44px}.back-control:hover:not(:disabled){background:transparent;color:var(--blue);text-decoration:underline}@media(max-width:600px){.stage-navigation{gap:12px}.stage-navigation .step{font-size:12px;flex-wrap:wrap;gap:4px}}
+
+#quiz legend{float:left;width:100%;padding:0;margin-bottom:12px}#quiz legend+label{clear:both}

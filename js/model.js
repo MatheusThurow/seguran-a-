@@ -18,7 +18,23 @@ export const risks=[
  {key:'inspecionou_pagamento',title:'Pix exclusivo e cartão indisponível',detail:'A loja oferece 50% de desconto no Pix: R$ 99,50. Cartão indisponível: “sistema em manutenção, use Pix”. Não há outra forma de pagamento.',explanation:'Desconto condicionado e pressão para usar apenas Pix pedem atenção. Não escolha uma forma de pagamento só porque a loja insiste.'},
  {key:'inspecionou_destinatario',title:'Destinatário diferente da empresa',detail:'Destinatário ilustrativo: Pessoa Exemplo da Simulação. Tipo: pessoa física. Relação com Casa Brisa: não informada. Nenhuma chave ou código Pix é disponibilizado.',explanation:'O destinatário é diferente da empresa e seu vínculo não foi explicado. Confira quem recebe e interrompa se a relação não puder ser verificada.'}
 ];
-export const shareText='PARE • CONFIRA • COMPRE\nPARE: desconfie de preço muito baixo e pressão de tempo.\nCONFIRA: endereço oficial, dados da empresa, reputação independente e destinatário do pagamento.\nCOMPRE: só depois de verificar; se houver suspeita, interrompa.\nCompras Seguras — simulação educativa.';
+export const shareText=`Gostou da oferta? Antes de comprar, siga 3 passos para uma compra segura!
+
+PARE: O preço está bom demais para ser verdade? Estão pedindo para você comprar rápido? Cuidado! Pode ser um golpe.
+
+CONFIRA: O site é verdadeiro? A empresa é confiável? Veja as avaliações de outros compradores e confira quem vai receber seu dinheiro.
+
+COMPRE: Está tudo certo? Agora sim, aproveite sua compra! Mas, se algo parecer estranho, é melhor não arriscar.
+
+Lembre-se: a melhor oferta é aquela em que você compra com segurança!
+
+Que tal colocar seus conhecimentos à prova?
+
+Participe da nossa simulação interativa e descubra se você consegue identificar uma oferta suspeita antes de cair em um golpe!
+
+Acesse a simulação pelo link:
+
+https://matheusthurow.github.io/seguran-a-/`;
 export function score(questions,answers){return questions.reduce((n,q,i)=>n+(q.correct===answers[i]?1:0),0)}
 export class Session {
  constructor({now=()=>performance.now(),id=()=>crypto.randomUUID(),save=()=>{},onEvent=()=>{}}={}){this.now=now;this.save=save;this.onEvent=onEvent;this.start=now();this.data={version:VERSION,id:id(),events:[],pre:null,post:null,outcome:null,analysisMs:0};this.stage='welcome';this.visible=true;this.segment=null;this.firstBuy=null;this.decided=false;this.stageTimes={welcome:0};this.stageStarted=this.start;}

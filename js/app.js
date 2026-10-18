@@ -66,9 +66,17 @@ app.addEventListener('click',async event=>{
  if(action==='post')go('post');
  if(action==='restart')fresh();
  if(action==='erase'){try{localStorage.removeItem('compras-seguras-session');document.querySelector('#status').textContent='Registro local apagado.'}catch{document.querySelector('#status').textContent='Não foi possível acessar o armazenamento.'}}
- if(action==='copy'){try{await navigator.clipboard.writeText(shareText);document.querySelector('#share-status').textContent='Dicas copiadas. Você pode colar em uma mensagem.'}catch{manualCopy()}}
- if(action==='share'){if(!navigator.share){manualCopy();return}try{await navigator.share({title:'Compras Seguras',text:shareText});document.querySelector('#share-status').textContent='Dicas compartilhadas.'}catch(error){if(error.name==='AbortError')document.querySelector('#share-status').textContent='Compartilhamento cancelado. Você pode continuar.';else manualCopy()}}
+ if(action==='copy'){try{await copyShareText();document.querySelector('#share-status').textContent='Dicas copiadas. Você pode colar em uma mensagem.'}catch{manualCopy()}}
+ if(action==='share'){if(!navigator.share){manualCopy();return}try{await navigator.share({title:'Compras Seguras',text:shareText,url:shareUrl});document.querySelector('#share-status').textContent='Dicas compartilhadas.'}catch(error){if(error.name==='AbortError')document.querySelector('#share-status').textContent='Compartilhamento cancelado. Você pode continuar.';else manualCopy()}}
 });
+const shareUrl='https://matheusthurow.github.io/seguran-a-/';
+async function copyShareText(){
+ if(navigator.clipboard.write&&typeof ClipboardItem!=='undefined'){
+  const html=escapeHtml(shareText).replaceAll('\n','<br>').replace(shareUrl,`<a href="${shareUrl}">${shareUrl}</a>`);
+  try{await navigator.clipboard.write([new ClipboardItem({'text/plain':new Blob([shareText],{type:'text/plain'}),'text/html':new Blob([html],{type:'text/html'})})]);return}catch{}
+ }
+ await navigator.clipboard.writeText(shareText);
+}
 function manualCopy(){openPanel('Copiar orientações manualmente','<p>Selecione o texto abaixo e use a opção Copiar do seu dispositivo.</p><label for="copy-text">Texto das dicas</label><textarea id="copy-text" readonly></textarea>');const text=document.querySelector('#copy-text');text.value=shareText;text.focus();text.select()}
 app.addEventListener('change',event=>{if(event.target.id!=='review-sort')return;const container=app.querySelector('#review-items'),items=[...container.children],mode=event.target.value;items.sort((a,b)=>mode==='useful'?Number(a.dataset.reviewOrder)-Number(b.dataset.reviewOrder):(mode==='asc'?1:-1)*a.dataset.reviewName.localeCompare(b.dataset.reviewName,'pt-BR'));items.forEach(item=>container.append(item))});
 app.addEventListener('input',event=>{if(event.target.id!=='shipping-cep')return;shippingAddress=null;shippingRequest++;const result=app.querySelector('#shipping-result');if(result)result.hidden=true;const input=event.target,digits=input.value.replace(/\D/g,'').slice(0,8);input.value=digits.length>5?digits.slice(0,5)+'-'+digits.slice(5):digits;input.removeAttribute('aria-invalid')});
