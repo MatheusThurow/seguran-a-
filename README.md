@@ -1,6 +1,5 @@
 # Compras Seguras
 
-## Apresentação
 
 O **Compras Seguras** é um projeto educativo que utiliza uma simulação de compra online para incentivar a identificação de sinais de risco em ofertas na internet.
 
