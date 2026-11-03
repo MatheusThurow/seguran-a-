@@ -1,82 +1,196 @@
 # Compras Seguras
 
-Protótipo educativo em português, HTML/CSS/JavaScript, sem dependências de instalação, backend de dados ou operação financeira. Usa ViaCEP para consulta de endereço e oferece integração opcional com GA4. Versão 1.0.0.
+## Apresentação
 
-## Abrir
+O **Compras Seguras** é um projeto educativo que utiliza uma simulação de compra online para incentivar a identificação de sinais de risco em ofertas na internet.
 
-É necessário Node.js 18 ou mais recente. Abra um terminal nesta pasta e execute:
+O participante observa um anúncio, investiga uma loja fictícia e decide se deseja continuar ou interromper a compra. A experiência inclui questionários, orientações e explicações sobre os sinais encontrados.
 
-```powershell
-node server.mjs
+**Toda a compra é simulada. Não há pagamento ou entrega real.**
+
+🔗 **[Acessar o site](https://matheusthurow.github.io/seguran-a-/)**  
+📊 **[Consultar os resultados gerais](https://matheusthurow.github.io/seguran-a-/resultados.html)**
+
+## Problema abordado
+
+Descontos expressivos, mensagens de urgência e páginas com aparência convincente podem dificultar a avaliação de uma oferta.
+
+O projeto oferece um ambiente de prática no qual o participante pode observar esses elementos e exercitar verificações antes de tomar uma decisão.
+
+## Objetivo geral
+
+Promover a educação para compras online mais seguras por meio de uma experiência interativa de investigação e tomada de decisão.
+
+## Objetivos específicos
+
+- Incentivar a comparação de preços e a reflexão diante de mensagens de urgência.
+- Orientar a verificação do endereço da loja, dos dados da empresa e das avaliações.
+- Destacar a importância de conferir as condições de pagamento e o destinatário do Pix.
+- Personalizar o produto apresentado conforme a faixa etária.
+- Comparar o desempenho nos questionários inicial e final.
+- Disponibilizar resultados para análise descritiva das participações.
+
+## Público e personalização
+
+A atividade contempla diferentes faixas etárias. O participante informa sua faixa na abertura, e o sistema define automaticamente o produto apresentado.
+
+| Faixa etária | Produto |
+|---|---|
+| Menores de 18 anos | PlayStation 5 (PS5) |
+| 18 a 29 anos | Fritadeira elétrica (Air Fryer) |
+| 30 a 44 anos | Máquina de lavar |
+| 45 a 59 anos | Geladeira |
+| 60 anos ou mais | Jogo de cama |
+
+O mesmo produto acompanha o participante no anúncio, na loja e no resumo do pedido, sem seleção manual do item.
+
+Os preços são definidos para a atividade e não representam ofertas comerciais reais.
+
+## Etapas da atividade
+
+1. **Boas-vindas:** apresentação da proposta e informação da faixa etária.
+2. **Questionário inicial:** três perguntas sobre segurança em compras online.
+3. **Guia de segurança:** orientações baseadas em “Pare, confira e compre”.
+4. **Anúncio:** apresentação da oferta correspondente à faixa etária.
+5. **Loja fictícia:** investigação do produto, preço, endereço, empresa e avaliações.
+6. **Pagamento fictício:** análise das condições de pagamento e do destinatário.
+7. **Revisão das escolhas:** explicações das pistas e apresentação das interações registradas.
+8. **Questionário final:** três perguntas para comparação com o desempenho inicial.
+9. **Resultado:** pontuações, respostas explicadas e orientações para compartilhar.
+
+O participante pode desistir por suspeita no anúncio, na loja ou no pagamento e seguir para o encerramento educativo.
+
+## Funcionalidades
+
+- Ofertas automáticas por faixa etária.
+- Imagens e preços específicos para cada produto.
+- Questionários inicial e final.
+- Guia de segurança disponível durante a investigação.
+- Painéis explicativos sobre sete sinais de risco:
+  - Preço.
+  - Urgência.
+  - Endereço da loja.
+  - Dados da empresa.
+  - Avaliações.
+  - Condições de pagamento.
+  - Destinatário do pagamento.
+- Consulta de endereço pelo CEP usando o ViaCEP.
+- Frete e prazo de entrega simulados.
+- Registro de interações e tempo de análise com a aba visível.
+- Comparação entre as pontuações inicial e final.
+- Cópia e compartilhamento das orientações.
+- Painel público com indicadores, gráficos, filtros e exportação em CSV.
+- Layout responsivo.
+
+## Tecnologias utilizadas
+
+| Tecnologia | Finalidade |
+|---|---|
+| HTML5 | Estrutura das páginas |
+| CSS3 | Estilização e layout responsivo |
+| JavaScript | Navegação, questionários e regras da atividade |
+| Node.js | Servidor local e testes automatizados |
+| Firebase Authentication | Autenticação anônima |
+| Cloud Firestore | Armazenamento das participações |
+| Firebase Analytics / Google Analytics 4 | Eventos de uso |
+| ViaCEP | Consulta de endereço |
+| Git e GitHub | Versionamento |
+| GitHub Pages | Hospedagem |
+| GitHub Actions | Testes e publicação automatizada |
+
+A interface foi desenvolvida sem framework. Os serviços Firebase são carregados por CDN.
+
+## Dados e resultados
+
+A sessão atual é registrada no armazenamento local do navegador. Ao concluir o questionário final, o sistema tenta enviar ao Firestore:
+
+- Respostas e pontuações.
+- Decisão tomada na simulação.
+- Faixa etária.
+- Eventos de interação.
+- Tempos da atividade.
+
+A interface informa se o envio foi concluído e permite tentar novamente em caso de falha.
+
+Não são solicitados nome, documento ou dados bancários. O CEP é enviado ao ViaCEP para consulta; o CEP e o endereço consultado não fazem parte da participação enviada ao Firestore.
+
+O painel possui acesso público. As regras incluídas no projeto permitem leitura pública das participações e vinculam a criação à autenticação anônima. Atualização e exclusão pelo cliente são bloqueadas. O funcionamento depende das configurações efetivamente publicadas no Firebase.
+
+Recarregar a página inicia uma nova sessão, sem retomada automática da anterior.
+
+## Como executar localmente
+
+**Pré-requisito:** Node.js 22, versão utilizada no fluxo de publicação.
+
+Na pasta do projeto, execute:
+
+```sh
+npm start
 ```
 
-Abra http://localhost:8080 no navegador. Para encerrar o servidor, pressione Ctrl+C. Não abra index.html diretamente: módulos JavaScript precisam de servidor HTTP.
+Depois, acesse:
 
-Para usar um celular na mesma rede, abra `http://IP-DO-COMPUTADOR:8080`. A rede e o firewall devem permitir esse acesso. O servidor serve arquivos estáticos; não recebe registros dos participantes. Compartilhamento e área de transferência dependem do navegador e de contexto seguro (HTTPS ou localhost). Se não disponíveis, há um campo de texto para cópia manual.
-
-## Usar e reiniciar
-
-Começar → três perguntas iniciais → guia → anúncio → loja → pagamento fictício → espelho → três perguntas finais → resultado. Desistir por suspeita está disponível no anúncio, na loja e no pagamento e leva ao mesmo encerramento educativo. No resultado, “Praticar novamente” cria outra sessão. Recarregar também inicia uma sessão nova.
-
-Somente a sessão atual é salva sob a chave `compras-seguras-session` do armazenamento local. Não há retomada após recarregar, histórico acumulado. A coleta de métricas centralizadas depende da configuração opcional do GA4. “Apagar registro local” remove o registro salvo. A atividade permanece em memória até recarregar ou reiniciar. Se o armazenamento estiver indisponível, a jornada continua em memória.
-
-## Verificar
-
-```powershell
-node --test tests/model.test.mjs
-node --check js/app.js
+```text
+http://localhost:8080/
 ```
 
-Consulte `docs/validacao.md` para evidências e pendências. Testes do modelo não substituem avaliação visual, navegação por teclado, Android, iPhone ou piloto. Nenhuma conformidade global de acessibilidade é declarada.
+Para encerrar o servidor, pressione `Ctrl+C`.
 
-## Arquivos
+Não é necessário instalar dependências para iniciar o servidor local. A aplicação deve ser aberta pelo servidor, pois utiliza módulos JavaScript. As integrações externas precisam de conexão com a internet.
 
-- `index.html`, `css/main.css`: estrutura, componentes e layout responsivo.
-- `js/model.js`: conteúdo, quizzes, eventos únicos e relógio de análise.
-- `js/app.js`: nove telas, painéis modais, feedback e compartilhamento.
-- `assets/fritadeira.svg`: ilustração local do produto fictício.
-- `tests/model.test.mjs`: testes de lógica com relógio controlado.
-- `docs/roteiro.md`: conteúdo, estados e roteiro da oficina.
-- `docs/validacao.md`: registro dos testes, escopo das evidências e limitações.
+## Estrutura do projeto
 
-A atividade usa um guia textual. O GA4 é opcional; consulte as instruções abaixo.
+```text
+assets/                 Imagens dos produtos e identidade visual
+css/                    Estilos da atividade e dos resultados
+js/
+  app.js                Telas, navegação e interações
+  model.js              Questionários e modelo da sessão
+  offers.js             Produtos e preços por faixa etária
+  storage.js            Envio das participações
+  results.js            Indicadores, gráficos e exportação
+  firebase-app.js       Inicialização do Firebase
+  analytics.js          Eventos de uso
+  analytics-config.js   Configuração da integração
+tests/                  Testes automatizados
+.github/workflows/      Publicação automatizada
+index.html              Página principal
+resultados.html         Painel de resultados
+server.mjs              Servidor local
+firestore.rules         Regras de acesso ao banco
+```
 
-## Google Analytics 4 e armazenamento
+Os arquivos de Supabase presentes no repositório pertencem a uma integração anterior. O envio atual utiliza Firestore.
 
-O localStorage usa a chave compras-seguras-session e guarda a sessão atual (respostas, notas, eventos e tempo). Esses dados ficam no navegador, não na pasta do projeto nem no Git. O CEP e o endereço ficam em memória; o CEP é enviado ao ViaCEP para consultar o endereço.
+## Testes e avaliação
 
-Para ativar GA4, preencha measurementId em js/analytics-config.js com o ID G-XXXXXXXXXX do fluxo Web. Sem ID, nenhum script do Analytics é carregado. O ID é público e pode entrar no Git; nunca coloque credenciais ou API secrets no frontend.
+Para executar os testes automatizados:
 
-A integração envia activity_step e os eventos do modelo, com etapa, duração e pontuação dos questionários. Não envia CEP, endereço, respostas individuais ou ID interno da sessão. A confirmação fictícia usa aceitou_pix_suspeito, não purchase.
+```sh
+npm test
+```
 
-No GA4, valide em Tempo real ou DebugView (debug: true na configuração durante o teste; desative depois). Cadastre dimensões/métricas personalizadas para activity_stage, quiz_score e analysis_ms se precisar usá-las nos relatórios. Desative a coleta automática de interações com formulários na medição otimizada do fluxo para evitar coletar informações dos campos.
+Os testes verificam pontuações, eventos, contagem de tempo, seleção dos produtos por faixa etária e consistência das informações apresentadas.
 
-GA4 serve para métricas agregadas; não é um backup completo dos registros individuais. Bloqueadores e falhas de rede podem impedir o envio.
+Esses testes não substituem avaliações de usabilidade com participantes nem inspeção visual em diferentes dispositivos.
 
-## Git
+A comparação dos questionários descreve o desempenho imediato na sessão. Uma melhora de pontuação não comprova retenção posterior ou eficácia educativa de longo prazo. Abrir uma pista ou permanecer mais tempo na loja também não comprova reconhecimento do risco.
 
-Versione os arquivos do projeto; não há dados de participantes nesses arquivos. O .gitignore exclui logs, dependências e arquivos de ambiente. Para publicar, crie um repositório e configure seu remoto; salvar no Git não hospeda o site.
+O painel pode conter participações de demonstração e teste, que devem ser consideradas na interpretação dos indicadores.
 
-## Supabase
+## Possibilidades de continuidade
 
-Esta aplicação usa a API REST, sem Next.js ou middleware. A configuração pública está em js/supabase-config.js. Execute supabase/setup.sql uma vez no SQL Editor do projeto para criar participacoes e sua política de acesso. Visitantes podem apenas inserir; não ler, alterar ou apagar resultados. A chave pública não permite executar esse SQL.
+- Realizar uma aplicação piloto com participantes.
+- Avaliar a compreensão das perguntas e explicações.
+- Ampliar a verificação de acessibilidade.
+- Testar a experiência em diferentes dispositivos.
+- Separar registros de teste de uma futura coleta acadêmica.
+- Avaliar o aprendizado após um intervalo de tempo.
 
-O envio ocorre ao responder o questionário final. A tela mostra sucesso ou falha e permite tentar novamente, mantendo o mesmo ID para evitar duplicação. Sem envio concluído, o registro permanece no armazenamento local da sessão; não há reenvio automático após recarregar. Participações incompletas não são enviadas.
+## Mensagem central
 
-Em Table Editor → participacoes você poderá consultar e exportar os resultados. CEP e endereço não são enviados. A coleta pública permite envios fabricados por terceiros; antes de uma aplicação pública em grande escala, acrescente validação e proteção contra abuso no servidor.
+**PARE:** diante de preços muito baixos e pressão para decidir.
 
-## Firebase Analytics (integração atual)
+**CONFIRA:** endereço oficial, empresa, reputação e destinatário do pagamento.
 
-A coleta usa o SDK Web oficial Firebase 13.0.0 por CDN e o aplicativo seguranca-7ff7c, com measurementId G-FC1CQG0DDJ. Essa configuração substitui a tag anterior G-F0ENF5WQP6. Os eventos da atividade continuam iguais; o Supabase não foi alterado. A configuração fica em js/analytics-config.js. As instruções anteriores sobre preencher measurementId diretamente em analyticsConfig foram substituídas pelo objeto firebaseConfig.
-
-Confira os dados no projeto Firebase correto, na seção Analytics, ou na propriedade GA4 vinculada a ele. O envio HTTP bem-sucedido não confirma a exibição nos relatórios; essa confirmação requer acesso ao painel.
-
-## Firestore (armazenamento atual)
-
-O envio agora usa Firebase Authentication anônimo e Cloud Firestore. Publique firestore.rules na aba Regras do Firestore antes de ativar o site. Documentos ficam na coleção participacoes, com ID uid_sessao, e incluem respostas, notas, eventos e tempo, sem CEP/endereço. Cada usuário pode criar e consultar apenas documentos do próprio UID; listagem, edição e exclusão são negadas. O painel administrativo permite ao responsável consultar os dados. Transações evitam documentos duplicados em novas tentativas.
-
-O Supabase não recebe novas participações após essa atualização. Os registros antigos permanecem lá; não houve migração ou exclusão. As seções anteriores de Supabase são históricas.
-
-## Painel de resultados
-
-Acesse resultados.html, sem login. Publique firestore.rules atualizado no console do Firebase para liberar a leitura pública das participações. A leitura dos registros será pública; criação continua vinculada ao usuário anônimo e edição/exclusão continuam bloqueadas. O painel mostra médias, decisões, sinais, evolução e tempo, com filtros por data e CSV. Inclui registros de teste; resultados antigos do Supabase não foram importados.
+**COMPRE:** somente depois de verificar; se houver suspeita, interrompa.
